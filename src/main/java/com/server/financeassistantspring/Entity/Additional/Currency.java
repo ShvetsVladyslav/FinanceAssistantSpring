@@ -112,6 +112,6 @@ public class Currency implements IAPIUser {
     static public List<Currency> currencyFill() throws IOException {
         Currency caller = new Currency();
         Currency[] currList = Currency.mapper.readValue(caller.apiCall(),Currency[].class);
-        return Arrays.stream(currList).toList();
+        return Arrays.asList(currList);
     }
 }
