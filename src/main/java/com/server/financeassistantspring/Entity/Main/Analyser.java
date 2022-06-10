@@ -123,11 +123,11 @@ public class Analyser{
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Transaction caller = new Transaction();
         for (int i = 0; i < client.getAccount().size(); i++){
-            temp1 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)), UnixTimeParser.timeParse(sdf.format(date.getTime()))), Transaction[].class);
+            temp1 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)), UnixTimeParser.timeParse(sdf.format(date.getTime())),client.getPersonalToken()), Transaction[].class);
             TimeUnit.SECONDS.sleep(70);
-            temp2 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (8*UnixTimeParser.oneWeek)), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek))), Transaction[].class);
+            temp2 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (8*UnixTimeParser.oneWeek)), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)),client.getPersonalToken()), Transaction[].class);
             TimeUnit.SECONDS.sleep(70);
-            temp3 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (12*UnixTimeParser.oneWeek)), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (8*UnixTimeParser.oneWeek))), Transaction[].class);
+            temp3 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (12*UnixTimeParser.oneWeek)), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (8*UnixTimeParser.oneWeek)),client.getPersonalToken()), Transaction[].class);
             writeoffRatio = ((calculateWriteOff(temp2)/calculateWriteOff(temp1)) + (calculateWriteOff(temp3)/calculateWriteOff(temp2))/2);
             reffilsRatio = ((calculateRefills(temp2)/calculateRefills(temp1)) + (calculateRefills(temp3)/calculateRefills(temp2))/2);
             ratio += (reffilsRatio - writeoffRatio);
@@ -135,7 +135,7 @@ public class Analyser{
         if (ratio > 0){
             for (int i = 0; i < client.getAccount().size(); i++){
                 TimeUnit.SECONDS.sleep(70);
-                temp1 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)), UnixTimeParser.timeParse(sdf.format(date.getTime()))), Transaction[].class);
+                temp1 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)), UnixTimeParser.timeParse(sdf.format(date.getTime())),client.getPersonalToken()), Transaction[].class);
                 result += (calculateRefills(temp1)*ratio - calculateWriteOff(temp1));
             }
             return result;
@@ -143,7 +143,7 @@ public class Analyser{
         else if(ratio < 0){
             for (int i = 0; i < client.getAccount().size(); i++){
                 TimeUnit.SECONDS.sleep(70);
-                temp1 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)), UnixTimeParser.timeParse(sdf.format(date.getTime()))), Transaction[].class);
+                temp1 = Transaction.mapper.readValue(caller.apiCall(client.getAccount().get(i).getId(), (UnixTimeParser.timeParse(sdf.format(date.getTime())) - (4*UnixTimeParser.oneWeek)), UnixTimeParser.timeParse(sdf.format(date.getTime())),client.getPersonalToken()), Transaction[].class);
                 result += (calculateRefills(temp1) - (-1*(calculateWriteOff(temp1)*ratio)));
             }
             return result;

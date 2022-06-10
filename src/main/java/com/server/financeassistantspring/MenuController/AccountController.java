@@ -1,15 +1,14 @@
 package com.server.financeassistantspring.MenuController;
 
+import com.server.financeassistantspring.Entity.Additional.Currency;
 import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.IAccountMenu;
 import com.server.financeassistantspring.Repository.UserRepository;
 import com.server.financeassistantspring.Repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -32,6 +31,7 @@ public class AccountController implements IAccountMenu {
         return result;
     }
     @Override
+    @GetMapping("/iban")
     public String getIBan(@RequestParam(value = "account")String account, @RequestParam(value = "clientId")String clientId) {
         User client = userRepository.findByClientId(clientId);
         String result = null;
@@ -42,4 +42,11 @@ public class AccountController implements IAccountMenu {
         }
         return result;
     }
+
+    @Override
+    public double getTotalBalance(@RequestParam String clientId, @RequestBody List<Currency>currencies){
+        User client = userRepository.findByClientId(clientId);
+        return client.getTotalBalance(currencies);
+    }
+
 }

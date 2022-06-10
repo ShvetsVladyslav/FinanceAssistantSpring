@@ -37,13 +37,13 @@ public class Transaction implements IAPIUser {
         return null;
     }
 
-    public String apiCall(String account, long from) throws IOException {
+    public String apiCall(String account, long from, String token) throws IOException {
         String JsonStr = null;
         final URL url = new URL(BASE_URL + "personal/statement/"+account+"/"+from);
         final HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("X-Token", "ut-yy_40zNs_htL89fUPsbS3qvhO89GJl2mVhRgLF4DI");
+        con.setRequestProperty("X-Token", token);
         con.setConnectTimeout(50000);
         con.setReadTimeout(7000000);
 
@@ -62,13 +62,13 @@ public class Transaction implements IAPIUser {
         return JsonStr;
     }
 
-    public String apiCall(String account, long from, long to) throws IOException {
+    public String apiCall(String account, long from, long to, String token) throws IOException {
         String JsonStr = null;
         final URL url = new URL(BASE_URL + "personal/statement/" + account + "/" + from + "/" + to);
         final HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
-        con.setRequestProperty("X-Token", "ut-yy_40zNs_htL89fUPsbS3qvhO89GJl2mVhRgLF4DI");
+        con.setRequestProperty("X-Token", token);
         con.setConnectTimeout(50000);
         con.setReadTimeout(7000000);
 

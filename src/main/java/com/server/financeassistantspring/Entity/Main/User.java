@@ -73,7 +73,7 @@ public class User implements IAPIUser {
         return JsonStr;
     }
 
-    public double getTotalBalance(List<Currency> currencies) throws IOException {
+    public double getTotalBalance(List<Currency> currencies){
         double balance = 0;
         for (int i = 0; i < this.account.size(); i++) {
             if (this.account.get(i).getCurrencyCode() == 980) {
