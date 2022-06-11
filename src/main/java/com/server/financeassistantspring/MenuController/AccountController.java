@@ -44,7 +44,7 @@ public class AccountController implements IAccountMenu {
     }
 
     @Override
-    @GetMapping("/totalbalance")
+    @PostMapping("/totalbalance")
     public double getTotalBalance(@RequestParam String clientId, @RequestBody List<Currency>currencies){
         User client = userRepository.findByClientId(clientId);
         return client.getTotalBalance(currencies);
