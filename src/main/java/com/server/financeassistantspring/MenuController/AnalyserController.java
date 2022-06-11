@@ -92,8 +92,9 @@ public class AnalyserController implements IAnalyserMenu {
     }
     @Override
     @GetMapping("/bymcc")
-    public void mccAnalyse(@RequestParam(value = "clientId")String clientId) {
+    public List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId) {
         User client = userRepository.findByClientId(clientId);
+        return null;
     }
 
     @Override

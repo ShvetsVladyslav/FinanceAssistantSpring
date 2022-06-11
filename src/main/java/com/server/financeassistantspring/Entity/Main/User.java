@@ -49,7 +49,7 @@ public class User implements IAPIUser {
     //OTHER METHOD
     @Override
     public String apiCall() throws IOException {
-        String JsonStr;
+        String JsonStr = null;
 
         final URL url = new URL(BASE_URL + "personal/client-info");
         final HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -66,9 +66,6 @@ public class User implements IAPIUser {
                 content.append(inputLine);
             }
             JsonStr = content.toString();
-        }
-        catch (final Exception ex) {
-            JsonStr = "Невдало";
         }
         return JsonStr;
     }

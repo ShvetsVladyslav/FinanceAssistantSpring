@@ -31,20 +31,19 @@ public class LoginController implements ILoginMenu {
         User client = new User();
         client.setPersonalToken(token);
         client.setMccListByGroup(MCC.mccFill());
+        try{
         JsonNode data = new ObjectMapper().readTree(client.apiCall());
-        if (Objects.equals(data.toString(), "Невдало")){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "login.post.token");
+        client = client.mapper.readValue(data.toString(), User.class);
+        client.setPersonalToken(token);
+        if (userRepository.findByClientId(client.getId())!= null){
+            User dbclient = userRepository.findByClientId(client.getId());
+            client.setPersonalMCC(dbclient.getPersonalMCC());
         }
-        else {
-
-            client = client.mapper.readValue(data.toString(), User.class);
-            client.setPersonalToken(token);
-            if (userRepository.findByClientId(client.getId())!= null){
-                User dbclient = userRepository.findByClientId(client.getId());
-                client.setPersonalMCC(dbclient.getPersonalMCC());
-            }
-            else userRepository.save(client);
-            return client;
+        else userRepository.save(client);
+        return client;
+        }
+        catch (Exception exception){
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "login.post.token");
         }
     }
 

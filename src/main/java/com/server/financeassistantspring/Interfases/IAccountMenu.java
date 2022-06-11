@@ -13,4 +13,5 @@ public interface IAccountMenu {
 
     String getIBan(@RequestParam(value = "account") String account, @RequestParam(value = "clientId") String clientId);
     double getTotalBalance(@RequestParam(value = "clientId")String clientId, @RequestBody List<Currency> currencies);
+    double getCreditlim(@RequestParam(value = "clientId")String clientId, @RequestBody List<Currency> currencies);
 }
