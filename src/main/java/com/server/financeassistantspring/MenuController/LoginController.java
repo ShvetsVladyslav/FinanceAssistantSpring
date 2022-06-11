@@ -2,7 +2,6 @@ package com.server.financeassistantspring.MenuController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.server.financeassistantspring.Entity.Additional.Currency;
 import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
 import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.ILoginMenu;
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.Objects;
-
 @CrossOrigin
 @RestController("/loginMenu")
 @RequestMapping("/loginMenu")

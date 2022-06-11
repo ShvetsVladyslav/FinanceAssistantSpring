@@ -7,9 +7,6 @@ import com.server.financeassistantspring.Repository.UserRepository;
 import com.server.financeassistantspring.Repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-
 @RestController
 @RequestMapping("/settings")
 public class SettingsController implements ISettingsMenu {

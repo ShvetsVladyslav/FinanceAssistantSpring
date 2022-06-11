@@ -22,7 +22,6 @@ public class AnalyserController implements IAnalyserMenu {
     UserRepository userRepository;
     @Autowired
     UserRepositoryCustom userRepositoryCustom;
-
     Analyser analyser = new Analyser();
     @Override
     @GetMapping("/writeoff")
