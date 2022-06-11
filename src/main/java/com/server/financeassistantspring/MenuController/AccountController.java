@@ -51,7 +51,7 @@ public class AccountController implements IAccountMenu {
     }
 
     @Override
-    @GetMapping("/creditlim")
+    @PostMapping("/creditlim")
     public double getCreditlim(@RequestParam String clientId, @RequestBody List<Currency>currencies) {
         return 0;
     }
