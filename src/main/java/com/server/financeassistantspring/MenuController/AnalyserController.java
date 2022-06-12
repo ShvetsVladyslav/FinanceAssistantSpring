@@ -47,7 +47,7 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.calculateRefills(extract) - analyser.calculateWriteOff(extract);
     }
     @Override
-    @GetMapping("/compare/writeoff")
+    @PostMapping("/compare/writeoff")
     public boolean compareToBiggerWriteOff(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException, InterruptedException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -56,7 +56,7 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.isWriteoffBigger(extract1, extract2);
     }
     @Override
-    @GetMapping("/compare/refills")
+    @PostMapping("/compare/refills")
     public boolean compareToBiggerRefills(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException, InterruptedException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -65,7 +65,7 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.isRefillsBigger(extract1, extract2);
     }
     @Override
-    @GetMapping("/equal/writeoff")
+    @PostMapping("/equal/writeoff")
     public boolean compareToEqualWriteOff(String clientId, String account, Timestamp timestamp) throws IOException, InterruptedException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -74,7 +74,7 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.isWriteoffEquals(extract1, extract2);
     }
     @Override
-    @GetMapping("/equal/refills")
+    @PostMapping("/equal/refills")
     public boolean compareToEqualRefills(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException, InterruptedException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -83,19 +83,19 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.isRefillsEquals(extract1, extract2);
     }
     @Override
-    @GetMapping("/prognosis")
+    @PostMapping("/prognosis")
     public double prognosis(@RequestParam(value = "clientId")String clientId) throws IOException, InterruptedException {
         User client = userRepository.findByClientId(clientId);
         return 0;
     }
     @Override
-    @GetMapping("/bymcc")
+    @PostMapping("/bymcc")
     public List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId, @RequestParam(value = "group")String group) {
         User client = userRepository.findByClientId(clientId);
         return null;
     }
     @Override
-    @GetMapping("/extract")
+    @PostMapping("/extract")
     public List<Transaction> showExtract(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestParam Timestamp timestamp) throws IOException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
