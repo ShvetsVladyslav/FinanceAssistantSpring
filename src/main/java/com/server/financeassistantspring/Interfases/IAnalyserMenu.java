@@ -19,5 +19,5 @@ public interface IAnalyserMenu {
     boolean compareToEqualRefills(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException, InterruptedException;
     double prognosis(@RequestParam(value = "clientId")String clientId) throws IOException, InterruptedException;
     List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId, @RequestParam(value = "group")String group);
-    List<Transaction> showExtract(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestParam Timestamp timestamp) throws IOException;
+    List<Transaction> showExtract(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException;
 }
