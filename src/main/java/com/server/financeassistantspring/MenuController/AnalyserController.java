@@ -96,7 +96,7 @@ public class AnalyserController implements IAnalyserMenu {
     }
     @Override
     @PostMapping("/extract")
-    public List<Transaction> showExtract(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestParam Timestamp timestamp) throws IOException {
+    public List<Transaction> showExtract(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
         Transaction[] extract = Transaction.mapper.readValue(caller.apiCall(account, UnixTimeParser.timeParse(timestamp.getTimestamp1()), UnixTimeParser.timeParse(timestamp.getTimestamp2()), client.getPersonalToken()), Transaction[].class);

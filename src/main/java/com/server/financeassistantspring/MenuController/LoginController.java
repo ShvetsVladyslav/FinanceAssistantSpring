@@ -32,7 +32,6 @@ public class LoginController implements ILoginMenu {
         client.setPersonalToken(token);
         if (userRepository.findByClientId(client.getId())!= null){
             User dbclient = userRepository.findByClientId(client.getId());
-            client.setPersonalMCC(dbclient.getPersonalMCC());
         }
         else userRepository.save(client);
         return client;
