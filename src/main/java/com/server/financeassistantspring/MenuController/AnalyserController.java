@@ -28,7 +28,7 @@ public class AnalyserController implements IAnalyserMenu {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
         Transaction[] extract = Transaction.mapper.readValue(caller.apiCall(account, UnixTimeParser.timeParse(timestamp.getTimestamp1()), UnixTimeParser.timeParse(timestamp.getTimestamp2()), client.getPersonalToken()), Transaction[].class);
-        return analyser.calculateWriteOff(extract);
+        return analyser.calculateWriteOff(extract)*(-1);
     }
     @Override
     @PostMapping("/refills")
