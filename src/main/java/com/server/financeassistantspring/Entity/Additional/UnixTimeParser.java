@@ -14,7 +14,7 @@ public class UnixTimeParser {
         if (timestamp != null)
         {
             try {
-                Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").parse(timestamp);
+                Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(timestamp);
                 return (long)date.getTime()/1000;
             } catch(ParseException ex) {
                 System.out.println("Неверный формат даты");
@@ -31,7 +31,7 @@ public class UnixTimeParser {
         {
             Date date = new Date ();
             date.setTime((long)unixTime*1000);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             //System.out.println(sdf.format(date));
             return sdf.format(date);
         }

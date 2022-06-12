@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
-//TODO: create prognosis method
 public class Analyser{
 
     public double calculateWriteOff(Transaction[] extract){
@@ -55,7 +53,7 @@ public class Analyser{
         else return null;
     }
 
-    public Transaction[] sortByMCC(Transaction[] extract, MCC[] mccList, String group){
+    public List<Transaction> sortByMCC(Transaction[] extract, List<MCC> mccList, String group){
         ArrayList<Transaction> result = new ArrayList<>();
         if (extract[0] != null){
             for (Transaction transaction: extract) {
@@ -66,7 +64,7 @@ public class Analyser{
                 }
 
             }
-            return result.toArray(new Transaction[0]);
+            return result;
         }
         else return null;
     }
@@ -100,7 +98,6 @@ public class Analyser{
         }
         else return false;
     }
-
     public boolean isRefillsEquals(Transaction[] extract1, Transaction[] extract2){
         if (extract1 != null & extract2 != null){
             if (calculateRefills(extract1) == calculateRefills(extract2)){

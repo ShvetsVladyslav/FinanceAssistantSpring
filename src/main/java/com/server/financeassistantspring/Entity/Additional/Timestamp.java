@@ -7,7 +7,7 @@ public class Timestamp {
     private String timestamp4;
 
     public String getTimestamp1() {
-        return timestamp1;
+        return timestamp1 + " 00:00:00";
     }
 
     public void setTimestamp1(String timestamp1) {
@@ -15,7 +15,7 @@ public class Timestamp {
     }
 
     public String getTimestamp2() {
-        return timestamp2;
+        return timestamp2 + " 00:00:00";
     }
 
     public void setTimestamp2(String timestamp2) {
@@ -23,7 +23,7 @@ public class Timestamp {
     }
 
     public String getTimestamp3() {
-        return timestamp3;
+        return timestamp3 + " 00:00:00";
     }
 
     public void setTimestamp3(String timestamp3) {
@@ -31,7 +31,7 @@ public class Timestamp {
     }
 
     public String getTimestamp4() {
-        return timestamp4;
+        return timestamp4 + " 00:00:00";
     }
 
     public void setTimestamp4(String timestamp4) {

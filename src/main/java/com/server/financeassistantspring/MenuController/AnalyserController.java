@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
 @RestController
 @RequestMapping("/analyser")
 public class AnalyserController implements IAnalyserMenu {
@@ -24,7 +23,7 @@ public class AnalyserController implements IAnalyserMenu {
     UserRepositoryCustom userRepositoryCustom;
     Analyser analyser = new Analyser();
     @Override
-    @GetMapping("/writeoff")
+    @PostMapping("/writeoff")
     public double showWriteOff(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -32,7 +31,7 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.calculateWriteOff(extract);
     }
     @Override
-    @GetMapping("/refills")
+    @PostMapping("/refills")
     public double showRefills(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -40,7 +39,7 @@ public class AnalyserController implements IAnalyserMenu {
         return analyser.calculateRefills(extract);
     }
     @Override
-    @GetMapping("/moneycircle")
+    @PostMapping("/moneycircle")
     public double showMoneyCircle(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException {
         User client = userRepository.findByClientId(clientId);
         Transaction caller = new Transaction();
@@ -91,11 +90,10 @@ public class AnalyserController implements IAnalyserMenu {
     }
     @Override
     @GetMapping("/bymcc")
-    public List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId) {
+    public List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId, @RequestParam(value = "group")String group) {
         User client = userRepository.findByClientId(clientId);
         return null;
     }
-
     @Override
     @GetMapping("/extract")
     public List<Transaction> showExtract(@RequestParam(value = "clientId")String clientId,@RequestParam(value = "account")String account, @RequestParam Timestamp timestamp) throws IOException {

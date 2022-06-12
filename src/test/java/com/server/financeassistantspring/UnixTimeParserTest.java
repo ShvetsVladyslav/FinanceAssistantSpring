@@ -10,12 +10,12 @@ public class UnixTimeParserTest {
     long timestamp2;
     @Before
     public void setUp(){
-        timestamp1 = "10|05|2022 00:00:00";
+        timestamp1 = "2022-05-10 00:00:00";
         timestamp2 = 1649970000;
     }
     @Test
     public void testParse() {
-        long result = 1647295200;
+        long result = 1652130000;
         Assert.assertEquals("Parse process failed!", result, UnixTimeParser.timeParse(timestamp1));
     }
     @Test

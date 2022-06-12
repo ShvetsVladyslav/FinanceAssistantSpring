@@ -11,12 +11,14 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AnalyserTest {
     Transaction[] testExtract1;
     Transaction[] testExtract2;
-    MCC[] mccTest;
-    ArrayList<MCC> personalMccTest;
+    List<MCC> mccTest;
+    List<MCC> personalMccTest;
     Analyser analyserTest;
 
     @Before
@@ -24,7 +26,7 @@ public class AnalyserTest {
         analyserTest = new Analyser();
         testExtract1 = new Transaction[2];
         testExtract2 = new Transaction[2];
-        mccTest = MCC.mccFill();
+        mccTest = Arrays.asList(MCC.mccFill());
     }
 
     @Test
@@ -100,15 +102,15 @@ public class AnalyserTest {
     }
 
     @Test
-    public void testSortByMCC(){
+    public void testSortByMCC() throws IOException {
         testExtract1[0] = new Transaction();
         testExtract1[1] = new Transaction();
         testExtract1[0].setMcc(3001);
         testExtract1[1].setMcc(3000);
         testExtract2[0] = new Transaction();
         testExtract2[1] = new Transaction();
-        Assert.assertNotNull(analyserTest.sortByMCC(testExtract1,mccTest, "AL"));
-        Assert.assertEquals(2, analyserTest.sortByMCC(testExtract1, mccTest, "AL").length);
+        Assert.assertNotNull(analyserTest.sortByMCC(testExtract1, mccTest,"AL"));
+        Assert.assertEquals(2, analyserTest.sortByMCC(testExtract1, mccTest,"AL").size());
     }
 
     @Test
@@ -119,8 +121,8 @@ public class AnalyserTest {
         testExtract1[1].setMcc(3000);
         personalMccTest = new ArrayList<>();
         personalMccTest.add(MCC.createPersonalGroup(Integer.parseInt("3000"), "test", "test", "test", "test"));
-        Assert.assertNotNull(analyserTest.sortByMCC(testExtract1,personalMccTest.toArray(new MCC[personalMccTest.size()]), "test"));
-        Assert.assertEquals(1, analyserTest.sortByMCC(testExtract1,personalMccTest.toArray(new MCC[personalMccTest.size()]), "test").length);
+        Assert.assertNotNull(analyserTest.sortByMCC(testExtract1,personalMccTest, "test"));
+        Assert.assertEquals(1, analyserTest.sortByMCC(testExtract1,personalMccTest, "test").size());
     }
 
     @Test
