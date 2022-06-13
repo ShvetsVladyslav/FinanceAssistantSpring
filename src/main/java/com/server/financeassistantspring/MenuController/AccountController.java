@@ -16,8 +16,6 @@ import java.util.Objects;
 public class AccountController implements IAccountMenu {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private UserRepositoryCustom userRepositoryCustom;
     @Override
     @GetMapping("/balance")
     public double getBalance(@RequestParam(value = "account")String account, @RequestParam(value = "clientId")String clientId) {

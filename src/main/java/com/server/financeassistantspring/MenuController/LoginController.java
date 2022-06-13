@@ -2,8 +2,11 @@ package com.server.financeassistantspring.MenuController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
+import com.server.financeassistantspring.Entity.Additional.PersonalSettings;
 import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.ILoginMenu;
+import com.server.financeassistantspring.Repository.PersonalSettingsRepository;
 import com.server.financeassistantspring.Repository.UserRepository;
 import com.server.financeassistantspring.Repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 @CrossOrigin
 @RestController("/loginMenu")
 @RequestMapping("/loginMenu")
@@ -19,7 +24,7 @@ public class LoginController implements ILoginMenu {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private UserRepositoryCustom userRepositoryCustom;
+    private PersonalSettingsRepository personalSettingsRepository;
 
     @PostMapping("/login")
     @Override
@@ -31,9 +36,11 @@ public class LoginController implements ILoginMenu {
         client = client.mapper.readValue(data.toString(), User.class);
         client.setPersonalToken(token);
         if (userRepository.findByClientId(client.getId())!= null){
-            User dbclient = userRepository.findByClientId(client.getId());
+           client.setPersonalSettings(personalSettingsRepository.findByClientId(client.getId()));
         }
-        else userRepository.save(client);
+        else {
+            personalSettingsRepository.save(new PersonalSettings(client.getId(), new ArrayList<>()));
+        }
         return client;
         }
         catch (Exception exception){

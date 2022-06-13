@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.server.financeassistantspring.Entity.Additional.Currency;
 import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
+import com.server.financeassistantspring.Entity.Additional.PersonalSettings;
 import com.server.financeassistantspring.Interfases.IAPIUser;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -42,7 +43,7 @@ public class User implements IAPIUser {
     private MCC[] mccListByGroup;
 
     @Field("personalMcc")
-    private List<MCC> personalMCC = new ArrayList<>();
+    private PersonalSettings personalSettings;
     //TODO: Create saving process for personal MCC
     private Currency[] currList;
 
@@ -142,26 +143,6 @@ public class User implements IAPIUser {
     public void setMccListByGroup(MCC[] mccListByGroup) throws IOException {
         this.mccListByGroup = MCC.mccFill();
     }
-
-    public List<MCC> getPersonalMCC() {
-        return this.personalMCC;
-    }
-
-    public void addPersonalMCC(int thisMcc, String thisType, String thisDescription, String thisFullDescription, String thisShortDescription) {
-        this.personalMCC.add(MCC.createPersonalGroup(thisMcc, thisType, thisDescription, thisFullDescription, thisShortDescription));
-    }
-
-    public void delPersonalMCC(int index){
-        this.personalMCC.remove(index);
-    }
-
-    public void delPersonalMCC(String type){
-        for (MCC personalMCC: this.personalMCC){
-            if (Objects.equals(personalMCC.getGroup().getType(), type)){
-                this.personalMCC.remove(personalMCC);
-            }
-        }
-    }
     public Currency[] getCurrList() {
         return currList;
     }
@@ -170,7 +151,11 @@ public class User implements IAPIUser {
         this.currList = currList;
     }
 
-    public void setPersonalMCC(List<MCC> personalMCC) {
-        this.personalMCC = personalMCC;
+    public PersonalSettings getPersonalSettings() {
+        return personalSettings;
+    }
+
+    public void setPersonalSettings(PersonalSettings personalSettings) {
+        this.personalSettings = personalSettings;
     }
 }

@@ -19,8 +19,6 @@ import java.util.List;
 public class AnalyserController implements IAnalyserMenu {
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    UserRepositoryCustom userRepositoryCustom;
     Analyser analyser = new Analyser();
     @Override
     @PostMapping("/writeoff")

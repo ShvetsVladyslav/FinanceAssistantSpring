@@ -1,10 +1,14 @@
 package com.server.financeassistantspring.MenuController;
 
 import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
+import com.server.financeassistantspring.Entity.Additional.PersonalSettings;
 import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.ISettingsMenu;
+import com.server.financeassistantspring.Repository.PersonalSettingsRepository;
+import com.server.financeassistantspring.Repository.PersonalSettingsRepositoryCustom;
 import com.server.financeassistantspring.Repository.UserRepository;
 import com.server.financeassistantspring.Repository.UserRepositoryCustom;
+import com.server.financeassistantspring.RepositoryImpl.PersonalSettingsRepositoryCustomImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 @RestController
@@ -13,23 +17,25 @@ public class SettingsController implements ISettingsMenu {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    UserRepositoryCustom userRepositoryCustom;
+    PersonalSettingsRepository personalSettingsRepository;
+    @Autowired
+    PersonalSettingsRepositoryCustom  personalSettingsRepositoryCustom;
     @Override
     @PostMapping("/add")
-    public User addSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC newMcc) {
-        User client = userRepository.findByClientId(clientId);
-        return userRepositoryCustom.addClientSettings(client, newMcc);
+    public PersonalSettings addSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC newMcc) {
+        PersonalSettings client = personalSettingsRepository.findByClientId(clientId);
+        return personalSettingsRepositoryCustom.addClientSettings(client, newMcc);
     }
     @Override
     @DeleteMapping("/delete")
-    public User deleteSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC mcc) {
-        User client = userRepository.findByClientId(clientId);
-        return userRepositoryCustom.deleteClientSettings(client, mcc);
+    public PersonalSettings deleteSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC mcc) {
+        PersonalSettings client = personalSettingsRepository.findByClientId(clientId);
+        return personalSettingsRepositoryCustom.deleteClientSettings(client, mcc);
     }
     @Override
     @PatchMapping("/edit")
-    public User updateSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC mcc) {
-        User client = userRepository.findByClientId(clientId);
-        return userRepositoryCustom.updateClientSettings(client, mcc);
+    public PersonalSettings updateSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC mcc) {
+        PersonalSettings client = personalSettingsRepository.findByClientId(clientId);
+        return personalSettingsRepositoryCustom.updateClientSettings(client, mcc);
     }
 }
