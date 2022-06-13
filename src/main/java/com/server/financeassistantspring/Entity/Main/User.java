@@ -44,7 +44,6 @@ public class User implements IAPIUser {
 
     @Field("personalMcc")
     private PersonalSettings personalSettings;
-    //TODO: Create saving process for personal MCC
     private Currency[] currList;
 
     //OTHER METHOD

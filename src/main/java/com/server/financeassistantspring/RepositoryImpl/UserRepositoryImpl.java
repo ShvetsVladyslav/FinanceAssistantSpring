@@ -11,40 +11,40 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 
-//@Repository
-//public class UserRepositoryImpl implements UserRepositoryCustom {
-//    @Autowired
-//    MongoTemplate mongoTemplate;
-//
-//    @Override
-//    public User addClientSettings(PersonalSettings client, MCC mcc) {
-//        Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getId()));
-//        for (int i = 0; i < client.getPersonalMCC().size(); i++) {
-//            if (client.getPersonalMCC().get(i).getMcc() == mcc.getMcc()){
-//                client.getPersonalMCC().remove(i);
-//            }
-//        }
-//        mongoTemplate.findAndReplace(query, client);
-//        return client;
-//    }
-//
-//    @Override
-//    public User deleteClientSettings(User client, MCC mcc) {
-//        Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getId()));
-//        client.getPersonalMCC().add(mcc);
-//        mongoTemplate.findAndReplace(query, client);
-//        return client;
-//    }
-//
-//    @Override
-//    public User updateClientSettings(User client, MCC mcc) {
-//        Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getId()));
-//        for (int i = 0; i < client.getPersonalMCC().size(); i++) {
-//            if (client.getPersonalMCC().get(i).getMcc() == mcc.getMcc()){
-//                client.getPersonalMCC().set(i, mcc);
-//            }
-//        }
-//        mongoTemplate.findAndReplace(query, client);
-//        return client;
-//    }
-//}
+@Repository
+public class UserRepositoryImpl implements UserRepositoryCustom {
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+    @Override
+    public User addClientSettings(User client, MCC mcc) {
+        Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getId()));
+        for (int i = 0; i < client.getPersonalSettings().getPersonalSettings().size(); i++) {
+            if (client.getPersonalSettings().getPersonalSettings().get(i).getMcc() == mcc.getMcc()){
+                client.getPersonalSettings().getPersonalSettings().add(mcc);
+            }
+        }
+        mongoTemplate.findAndReplace(query, client);
+        return null;
+    }
+
+    @Override
+    public User deleteClientSettings(User client, MCC mcc) {
+        Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getId()));
+        //client.getPersonalSettings().add(mcc);
+        mongoTemplate.findAndReplace(query, client);
+        return client;
+    }
+
+    @Override
+    public User updateClientSettings(User client, MCC mcc) {
+        Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getId()));
+        for (int i = 0; i < client.getPersonalSettings().getPersonalSettings().size(); i++) {
+            if (client.getPersonalSettings().getPersonalSettings().get(i).getMcc() == mcc.getMcc()){
+                client.getPersonalSettings().getPersonalSettings().add(mcc);
+            }
+        }
+        mongoTemplate.findAndReplace(query, client);
+        return client;
+    }
+}

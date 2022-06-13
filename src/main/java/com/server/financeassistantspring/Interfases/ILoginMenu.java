@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.IOException;
 
 public interface ILoginMenu {
-    @GetMapping("/login")
+
     User Login(@RequestParam(value = "token") String token) throws IOException;
 
     String getMonoLink();

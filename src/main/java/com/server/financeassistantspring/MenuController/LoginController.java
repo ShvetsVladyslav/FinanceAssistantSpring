@@ -2,13 +2,11 @@ package com.server.financeassistantspring.MenuController;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
 import com.server.financeassistantspring.Entity.Additional.PersonalSettings;
 import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.ILoginMenu;
 import com.server.financeassistantspring.Repository.PersonalSettingsRepository;
 import com.server.financeassistantspring.Repository.UserRepository;
-import com.server.financeassistantspring.Repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,16 +33,13 @@ public class LoginController implements ILoginMenu {
         JsonNode data = new ObjectMapper().readTree(client.apiCall());
         client = client.mapper.readValue(data.toString(), User.class);
         client.setPersonalToken(token);
-        if (userRepository.findByClientId(client.getId())!= null){
-           client.setPersonalSettings(personalSettingsRepository.findByClientId(client.getId()));
-        }
-        else {
+        if (personalSettingsRepository.findByClientId(client.getId()) == null){
             personalSettingsRepository.save(new PersonalSettings(client.getId(), new ArrayList<>()));
         }
         return client;
         }
         catch (Exception exception){
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "login.post.conflict");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, exception.getMessage());
         }
     }
 

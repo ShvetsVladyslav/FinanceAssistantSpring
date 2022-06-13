@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -18,20 +19,18 @@ public class PersonalSettingsRepositoryCustomImpl implements PersonalSettingsRep
     @Override
     public PersonalSettings addClientSettings(PersonalSettings client, MCC mcc) {
         Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getClientId()));
-        for (int i = 0; i < client.getPersonalSettings().size(); i++) {
-            if (client.getPersonalSettings().get(i).getMcc() == mcc.getMcc()){
-                client.getPersonalSettings().remove(i);
-            }
-        }
-        mongoTemplate.findAndReplace(query, client);
+        client.getPersonalSettings().add(mcc);
+        Update update = new Update().set("personalSettings", client.getPersonalSettings());
+        mongoTemplate.findAndModify(query, update, PersonalSettings.class);
         return client;
     }
 
     @Override
     public PersonalSettings deleteClientSettings(PersonalSettings client, MCC mcc) {
         Query query = new Query().addCriteria(Criteria.where("clientId").is(client.getClientId()));
-        client.getPersonalSettings().add(mcc);
-        mongoTemplate.findAndReplace(query, client);
+        client.getPersonalSettings().remove(mcc);
+        Update update = new Update().set("personalSettins", client.getPersonalSettings());
+        mongoTemplate.findAndModify(query, update, PersonalSettings.class);
         return client;
     }
 
@@ -43,7 +42,8 @@ public class PersonalSettingsRepositoryCustomImpl implements PersonalSettingsRep
                 client.getPersonalSettings().set(i, mcc);
             }
         }
-        mongoTemplate.findAndReplace(query, client);
+        Update update = new Update().set("personalSettins", client.getPersonalSettings());
+        mongoTemplate.findAndModify(query, update, PersonalSettings.class);
         return client;
     }
 }

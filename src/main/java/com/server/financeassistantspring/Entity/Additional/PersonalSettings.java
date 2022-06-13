@@ -10,6 +10,7 @@ import java.util.List;
 public class PersonalSettings {
     @Field(value = "clientId")
     private String clientId;
+    @Field(value = "personalSettings")
     private List<MCC> personalSettings;
 
     public PersonalSettings(String clientId, List<MCC> personalSettings) {

@@ -120,7 +120,7 @@ public class AnalyserTest {
         testExtract1[0].setMcc(3001);
         testExtract1[1].setMcc(3000);
         personalMccTest = new ArrayList<>();
-        personalMccTest.add(MCC.createPersonalGroup(Integer.parseInt("3000"), "test", "test", "test", "test"));
+        personalMccTest.add(MCC.createPersonalGroup("3000", "test", "test", "test", "test"));
         Assert.assertNotNull(analyserTest.sortByMCC(testExtract1,personalMccTest, "test"));
         Assert.assertEquals(1, analyserTest.sortByMCC(testExtract1,personalMccTest, "test").size());
     }

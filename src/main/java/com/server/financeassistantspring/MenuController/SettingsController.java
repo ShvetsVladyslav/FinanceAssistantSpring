@@ -2,13 +2,10 @@ package com.server.financeassistantspring.MenuController;
 
 import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
 import com.server.financeassistantspring.Entity.Additional.PersonalSettings;
-import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.ISettingsMenu;
 import com.server.financeassistantspring.Repository.PersonalSettingsRepository;
 import com.server.financeassistantspring.Repository.PersonalSettingsRepositoryCustom;
 import com.server.financeassistantspring.Repository.UserRepository;
-import com.server.financeassistantspring.Repository.UserRepositoryCustom;
-import com.server.financeassistantspring.RepositoryImpl.PersonalSettingsRepositoryCustomImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 @RestController
@@ -37,5 +34,10 @@ public class SettingsController implements ISettingsMenu {
     public PersonalSettings updateSettings(@RequestParam(value = "clientId") String clientId,@RequestBody MCC mcc) {
         PersonalSettings client = personalSettingsRepository.findByClientId(clientId);
         return personalSettingsRepositoryCustom.updateClientSettings(client, mcc);
+    }
+    @Override
+    @GetMapping
+    public PersonalSettings getSettings(@RequestParam(value = "clientId")String clientId){
+        return personalSettingsRepository.findByClientId(clientId);
     }
 }

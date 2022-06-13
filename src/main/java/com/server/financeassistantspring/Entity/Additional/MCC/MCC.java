@@ -15,15 +15,15 @@ public class MCC {
 
     static ObjectMapper mapper = new ObjectMapper();
     @JsonProperty("mcc")
-    private int mcc;
+    private String mcc;
     @JsonProperty("group")
     private MCCGroup group;
 
-    public int getMcc() {
+    public String getMcc() {
         return mcc;
     }
 
-    public void setMcc(int mcc) {
+    public void setMcc(String mcc) {
         this.mcc = mcc;
     }
 
@@ -42,7 +42,7 @@ public class MCC {
         return mccList;
     }
 
-    static public MCC createPersonalGroup(int thisMcc, String thisType, String thisDescription, String thisFullDescription, String thisShortDescription){
+    static public MCC createPersonalGroup(String thisMcc, String thisType, String thisDescription, String thisFullDescription, String thisShortDescription){
         MCC personalGroup = new MCC();
         personalGroup.setGroup(new MCCGroup());
         personalGroup.getGroup().setDescription(new Description());
