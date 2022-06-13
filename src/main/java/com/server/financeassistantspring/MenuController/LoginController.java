@@ -7,6 +7,7 @@ import com.server.financeassistantspring.Entity.Main.User;
 import com.server.financeassistantspring.Interfases.ILoginMenu;
 import com.server.financeassistantspring.Repository.PersonalSettingsRepository;
 import com.server.financeassistantspring.Repository.UserRepository;
+import com.server.financeassistantspring.Repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,8 @@ public class LoginController implements ILoginMenu {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    UserRepositoryCustom userRepositoryCustom;
+    @Autowired
     private PersonalSettingsRepository personalSettingsRepository;
 
     @PostMapping("/login")
@@ -36,7 +39,11 @@ public class LoginController implements ILoginMenu {
         if (personalSettingsRepository.findByClientId(client.getId()) == null){
             personalSettingsRepository.save(new PersonalSettings(client.getId(), new ArrayList<>()));
         }
-        return client;
+        if (userRepository.findByClientId(client.getId())==null){
+            userRepository.save(client);
+        }
+        else userRepositoryCustom.update(client.getId(), client);
+        return userRepository.findByClientId(client.getId());
         }
         catch (Exception exception){
             throw new ResponseStatusException(HttpStatus.CONFLICT, exception.getMessage());

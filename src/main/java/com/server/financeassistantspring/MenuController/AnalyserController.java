@@ -1,5 +1,6 @@
 package com.server.financeassistantspring.MenuController;
 
+import com.server.financeassistantspring.Entity.Additional.MCC.MCC;
 import com.server.financeassistantspring.Entity.Additional.Timestamp;
 import com.server.financeassistantspring.Entity.Additional.UnixTimeParser;
 import com.server.financeassistantspring.Entity.Main.Analyser;
@@ -9,11 +10,16 @@ import com.server.financeassistantspring.Interfases.IAnalyserMenu;
 import com.server.financeassistantspring.Repository.UserRepository;
 import com.server.financeassistantspring.Repository.UserRepositoryCustom;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/analyser")
 public class AnalyserController implements IAnalyserMenu {
@@ -88,9 +94,27 @@ public class AnalyserController implements IAnalyserMenu {
     }
     @Override
     @PostMapping("/bymcc")
-    public List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId, @RequestParam(value = "group")String group) {
+    public List<Transaction> mccAnalyse(@RequestParam(value = "clientId")String clientId, @RequestParam(value = "group")String group,@RequestParam(value = "account")String account, @RequestBody Timestamp timestamp) throws IOException {
+        List<MCC> mccList = new ArrayList<>();
         User client = userRepository.findByClientId(clientId);
-        return null;
+        for (int i = 0; i<client.getPersonalSettings().getPersonalSettings().size(); i++){
+            if (Objects.equals(client.getPersonalSettings().getPersonalSettings().get(i).getGroup().getType(), group)){
+                mccList.add(client.getPersonalSettings().getPersonalSettings().get(i));
+            }
+        }
+        for (int i = 0; i < client.getMccListByGroup().length;i++){
+            if (Objects.equals(client.getMccListByGroup()[i].getGroup().getType(), group)){
+                mccList.add(client.getMccListByGroup()[i]);
+            }
+        }
+        if (mccList.size() == 0){
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"group not found");
+        }
+        else {
+            Transaction caller = new Transaction();
+            Transaction[] extract = Transaction.mapper.readValue(caller.apiCall(account, UnixTimeParser.timeParse(timestamp.getTimestamp1()), UnixTimeParser.timeParse(timestamp.getTimestamp2()), client.getPersonalToken()), Transaction[].class);
+            return analyser.sortByMcc(Arrays.asList(extract), mccList);
+        }
     }
     @Override
     @PostMapping("/extract")

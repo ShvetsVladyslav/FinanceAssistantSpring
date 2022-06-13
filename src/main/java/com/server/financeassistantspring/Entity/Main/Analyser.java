@@ -147,4 +147,7 @@ public class Analyser{
         }
         else return result;
     }
+    public List<Transaction> sortByMcc(List<Transaction> extract, List<MCC> mccList){
+        return null;
+    }
 }
